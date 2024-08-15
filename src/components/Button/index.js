@@ -7,6 +7,7 @@ export const BUTTON_TYPES = {
   SUBMIT: 2,
 };
 
+
 const Button = ({ title, onClick, type, disabled, children }) => {
   switch (type) {
     case BUTTON_TYPES.DEFAULT:
@@ -23,6 +24,7 @@ const Button = ({ title, onClick, type, disabled, children }) => {
         </button>
       );
     case BUTTON_TYPES.SUBMIT:
+      
       return (
         <input
           disabled={disabled}
@@ -33,7 +35,10 @@ const Button = ({ title, onClick, type, disabled, children }) => {
           onClick={onClick}
           title={title}
         />
+        
+        
       );
+      
     default:
       return (
         <button
@@ -47,8 +52,11 @@ const Button = ({ title, onClick, type, disabled, children }) => {
           {children}
         </button>
       );
+      
   }
+  
 };
+
 
 // eslint-disable-next-line react/no-typos
 Button.propTypes = {
