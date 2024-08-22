@@ -7,24 +7,41 @@ import "./style.scss";
 const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
   const byDateDesc = data?.focus.sort((evtA, evtB) =>
     new Date(evtA.date) > new Date(evtB.date) ? -1 : 1
   );
   
-  const nextCard = () => {
-    if (byDateDesc !== undefined) {
-      setTimeout(
-        () => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0),
-        5000
-      );
-    }
-  };
   useEffect(() => {
-    nextCard();
-  },);
+    const handleKeyDown = (e) => {
+      if (e.key === " ") {
+        e.preventDefault();
+        setIsPaused(!isPaused);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isPaused]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!isPaused && byDateDesc?.length) {
+        setIndex((prevIndex) =>
+          prevIndex < byDateDesc.length - 1 ? prevIndex + 1 : 0
+        );
+      }
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [index, isPaused, byDateDesc]);
  
   return (
-    <div className="SlideCardList">
+    <div className="SlideCardList" data-testid="slider" data-paused={isPaused}>
       {byDateDesc?.map((event, idx) => (
          
         <div key={event.title}>  {/* Utiliser `event.id` pour garantir l'unicité */}    
