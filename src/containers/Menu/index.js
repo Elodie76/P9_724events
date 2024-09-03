@@ -2,6 +2,7 @@
 import Button from "../../components/Button";
 import Logo from "../../components/Logo";
 
+
 import "./style.scss";
 
 const Menu = () => (

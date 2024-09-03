@@ -35,7 +35,7 @@ const Slider = () => {
           prevIndex < byDateDesc.length - 1 ? prevIndex + 1 : 0
         );
       }
-    }, 2000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [index, isPaused, byDateDesc]);
